@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const { ObjectID } = require('mongodb')
 const HttpStatus = require('http-status-codes')
 const bodyParser = require('body-parser')
 var Book = require('./model')
@@ -24,11 +25,17 @@ app.get('/Books', (req, res) => {
 })
 
 app.get('/Books/:id', (req, res) => {
-    Book.findById(req.params.id)
-    .then((book) => 
-        res.send(book)
-    ), (error) => {
-        res.status(HttpStatus.NOT_FOUND).send({message: 'not found'})
+    if(!ObjectID.isValid(req.params.id))
+    {
+        res.status(200).send({message: "id is not valid"})
+    }
+    else {
+        Book.findById(req.params.id)
+        .then((book) => 
+            res.send(book)
+        ), (error) => {
+            res.status(HttpStatus.NOT_FOUND).send({message: 'not found'})
+        }
     }
 })
 
@@ -37,6 +44,15 @@ app.post('/Books', (req, res) => {
     book.save()
     .then((book) => {
         res.status(HttpStatus.CREATED).send(book)
+    }, (error) => {
+        res.status(400).send({message: error})
+    })
+})
+
+app.delete('/Books', (req,res) => {
+    Book.findByIdAndRemove(req.params.id)
+    .then((book) => {
+        res.send(book)
     }, (error) => {
         res.status(400).send({message: error})
     })
