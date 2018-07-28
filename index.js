@@ -12,6 +12,6 @@ app.get('/Book:id', () => {
 
 })
 
-app.listen(serverPort, () => {
+app.listen(port, () => {
     console.log(`server is listening on ${port}`)
 })
