@@ -1,10 +1,14 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const HttpStatus = require('http-status-codes')
+const bodyParser = require('body-parser')
 var Book = require('./model')
 
 const port = process.env.PORT || 3000
 
 const app = new express();
+
+app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
     res.send("Welcome to the book store")
@@ -12,30 +16,29 @@ app.get('/', (req, res) => {
 
 app.get('/Books', (req, res) => {
     Book.find()
-    .then((error, data) => {
-        if(error)
-        {
-            res.status(HttpStatus.NOT_FOUND).send({message: "There is not books right now."})
-        }
-        else
-            res.send(data)
-    })
-    .catch(error => {
+    .then((books) => {
+        res.send(books)
+    },(error) => {
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error})
     })
 })
-app.get('/Books:id', (req, res) => {
-    Book.findById(res.id)
-    .then((error, data) => {
-        if(error)
-        {
-            res.status(HttpStatus.NOT_FOUND).send({message: "book not found."})
-        }
-        else
-            res.send(data)
-    })
-    .catch(error => {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({error})
+
+app.get('/Books/:id', (req, res) => {
+    Book.findById(req.params.id)
+    .then((book) => 
+        res.send(book)
+    ), (error) => {
+        res.status(HttpStatus.NOT_FOUND).send({message: 'not found'})
+    }
+})
+
+app.post('/Books', (req, res) => {
+    var book = new Book(req.body)
+    book.save()
+    .then((book) => {
+        res.status(HttpStatus.CREATED).send(book)
+    }, (error) => {
+        res.status(400).send({message: error})
     })
 })
 
