@@ -1,0 +1,31 @@
+{
+  "name": "bookstore",
+  "version": "1.0.0",
+  "description": "book store server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brajeshjaishwal/BookStoreServer.git"
+  },
+  "author": "brajesh jaishwal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brajeshjaishwal/BookStoreServer/issues"
+  },
+  "homepage": "https://github.com/brajeshjaishwal/BookStoreServer#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.2.5"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  }
+}
