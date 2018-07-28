@@ -10,6 +10,9 @@ const port = process.env.PORT || 3000
 const app = new express();
 
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.text())
+app.use(bodyParser.json({type: 'application/json'}))
 
 app.get('/', (req, res) => {
     res.send("Welcome to the book store")
@@ -58,6 +61,18 @@ app.delete('/Books', (req,res) => {
     })
 })
 
+app.put('/Books', (req, res) => {
+    Book.findByIdAndUpdate(req.params.id, req.body)
+        .then((book) => {
+            res.status(200).send(book)
+        }, (error) => {
+            res.status(404).send({message: error})
+        }
+    )
+})
+
 app.listen(port, () => {
     console.log(`server is listening on ${port}`)
 })
+
+module.exports = app
