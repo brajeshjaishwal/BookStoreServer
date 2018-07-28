@@ -1,22 +1,30 @@
+const mongoose = require('./mongoose')
 
-
-const Book = mongoose.model({
+const Book = mongoose.model('Book', {
     Title: {
-        type: string,
+        type: String,
         require: true,
         minlength: 1,
         trim: true
     },
     Author: {
-        type: string,
+        type: String,
         require: true,
         minlength: 1,
         trim: true
     },
     Description: {
-        type: string, 
+        type: String, 
         trim: true
     }
 })
+
+var newBook = new Book({
+    Title: "Test book",
+    Description: "test description",
+    Author: "Brajesh jaishwal"
+})
+
+//newBook.save()
 
 module.exports = Book
