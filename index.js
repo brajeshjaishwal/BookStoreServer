@@ -1,6 +1,6 @@
 const express = require('express')
 
-const serverPort = process.env.PORT || 4000
+const port = process.env.PORT || 3000
 
 const app = new express();
 
@@ -13,5 +13,5 @@ app.get('/Book:id', () => {
 })
 
 app.listen(serverPort, () => {
-    console.log(`server is listening on ${serverPort}`)
+    console.log(`server is listening on ${port}`)
 })

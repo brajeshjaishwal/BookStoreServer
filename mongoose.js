@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 
-const dbport = process.config.MONGODB_URL || 'mongodb://localhost.27017/BookStore'
+const dbUrl = process.env.MONGODB_URI || 'mongodb://localhost.27017/BookStore'
 
-mongoose.connect(databaseurl, () => {
+mongoose.connect(dbUrl, () => {
     "data base is runnong "
 })
